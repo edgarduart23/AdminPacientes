@@ -27,8 +27,14 @@ namespace AdminPacientes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AdminContexto>(opts => opts.UseSqlServer(Configuration["ConnectionString:EmployeeDB"]));
+            services.AddDbContext<AdminContexto>(opts => opts.UseSqlServer(Configuration["ConnectionString:Administracion3DB"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().AddJsonOptions(ConfigurationJson);
+        }
+
+        private void ConfigurationJson(MvcJsonOptions obj)
+        {
+            obj.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

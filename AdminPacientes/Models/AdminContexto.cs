@@ -14,8 +14,10 @@ namespace AdminPacientes.Models
         }
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<Domicilio> Domicilios { get; set; }
-        public DbSet<Representante> Representantes { get; set; }
-        public DbSet<SeguroMedico> SeguroMedicos { get; set; }
+        public DbSet<Tutor> Tutores { get; set; }
+        public DbSet<ObraSocial> ObraSociales { get; set; }
+        public DbSet<Persona> Personas { get; set; }
+        public DbSet<Registro> Registros { get; set; }
 
     }
 }

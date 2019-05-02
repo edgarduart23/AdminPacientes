@@ -1,0 +1,14 @@
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\bin\Debug\netcoreapp2.1\AdminPacientes.deps.json
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\bin\Debug\netcoreapp2.1\AdminPacientes.runtimeconfig.json
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\bin\Debug\netcoreapp2.1\AdminPacientes.runtimeconfig.dev.json
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\bin\Debug\netcoreapp2.1\AdminPacientes.dll
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\bin\Debug\netcoreapp2.1\AdminPacientes.pdb
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\obj\Debug\netcoreapp2.1\AdminPacientes.csprojAssemblyReference.cache
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\obj\Debug\netcoreapp2.1\AdminPacientes.csproj.CoreCompileInputs.cache
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\obj\Debug\netcoreapp2.1\AdminPacientes.RazorAssemblyInfo.cache
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\obj\Debug\netcoreapp2.1\AdminPacientes.RazorAssemblyInfo.cs
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\obj\Debug\netcoreapp2.1\AdminPacientes.AssemblyInfoInputs.cache
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\obj\Debug\netcoreapp2.1\AdminPacientes.AssemblyInfo.cs
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\obj\Debug\netcoreapp2.1\AdminPacientes.RazorTargetAssemblyInfo.cache
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\obj\Debug\netcoreapp2.1\AdminPacientes.dll
+C:\Users\edgardo\Desktop\AdminPacientes\AdminPacientes\obj\Debug\netcoreapp2.1\AdminPacientes.pdb

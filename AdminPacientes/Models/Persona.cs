@@ -5,15 +5,17 @@ using System.Threading.Tasks;
 
 namespace AdminPacientes.Models
 {
-    public class Representante
+    public class Persona
     {
-        public int IdRepresentate { get; set; }
+        public int Id { get; set; }
+        public int Dni { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
-        public string Sexo { get; set; }
         public DateTime FechaNacimiento { get; set; }
-        public int Dni { get; set; }
-        public int Telefono { get; set; }
-        public string Parentezco { get; set; }
+        public string Sexo { get; set; }
+        public string Nacionalidad { get; set; }
+        //relacion entre domicilio
+        public ICollection<Domicilio> Domicilios { get; set; }
+
     }
 }
