@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPacientes.Migrations
 {
     [DbContext(typeof(AdminContexto))]
-    [Migration("20190502173348_primera")]
+    [Migration("20190515003221_primera")]
     partial class primera
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,7 +62,8 @@ namespace AdminPacientes.Migrations
 
                     b.Property<string>("Direccion");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
                     b.Property<string>("Nombre");
 
@@ -81,18 +82,25 @@ namespace AdminPacientes.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Apellido");
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
                     b.Property<int>("Dni");
 
+                    b.Property<string>("Email")
+                        .IsRequired();
+
                     b.Property<DateTime>("FechaNacimiento");
 
                     b.Property<string>("Nacionalidad");
 
-                    b.Property<string>("Nombre");
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
                     b.Property<string>("Sexo");
 

@@ -18,7 +18,7 @@ namespace AdminPacientes.Migrations
                     Direccion = table.Column<string>(nullable: true),
                     Tipo = table.Column<string>(nullable: true),
                     Telefono = table.Column<int>(nullable: false),
-                    Email = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,11 +32,12 @@ namespace AdminPacientes.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Dni = table.Column<int>(nullable: false),
-                    Nombre = table.Column<string>(nullable: true),
-                    Apellido = table.Column<string>(nullable: true),
+                    Nombre = table.Column<string>(maxLength: 30, nullable: false),
+                    Apellido = table.Column<string>(maxLength: 30, nullable: false),
                     FechaNacimiento = table.Column<DateTime>(nullable: false),
                     Sexo = table.Column<string>(nullable: true),
                     Nacionalidad = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     FechaAlta = table.Column<DateTime>(nullable: true),
                     FechaBaja = table.Column<DateTime>(nullable: true),

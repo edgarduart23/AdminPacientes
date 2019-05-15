@@ -60,7 +60,8 @@ namespace AdminPacientes.Migrations
 
                     b.Property<string>("Direccion");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
                     b.Property<string>("Nombre");
 
@@ -79,18 +80,25 @@ namespace AdminPacientes.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Apellido");
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
                     b.Property<int>("Dni");
 
+                    b.Property<string>("Email")
+                        .IsRequired();
+
                     b.Property<DateTime>("FechaNacimiento");
 
                     b.Property<string>("Nacionalidad");
 
-                    b.Property<string>("Nombre");
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
                     b.Property<string>("Sexo");
 
