@@ -9,12 +9,14 @@ namespace AdminPacientes.Models
     public class ObraSocial
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "El nombre es requerido")]
+        [StringLength(40)]
         public string Nombre { get; set; }
+        [StringLength(200)]
         public string Direccion { get; set; }
-        public string Tipo { get; set; }
-        public int Telefono { get; set; }
+        public ulong Telefono { get; set; }
         [Display(Name = "Direccion de Emails")]
-        [Required(ErrorMessage = "The email address is required")]
+        [Required(ErrorMessage = "El email es requerido")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
         //relacion entre Paciente

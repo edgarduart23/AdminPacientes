@@ -30,6 +30,7 @@ namespace AdminPacientes
             services.AddDbContext<AdminContexto>(opts => opts.UseSqlServer(Configuration["ConnectionString:AdministracionDB"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMvc().AddJsonOptions(ConfigurationJson);
+            
             //services.AddMvc(options =>
             //{
             //    options.ReturnHttpNotAcceptable = true;
