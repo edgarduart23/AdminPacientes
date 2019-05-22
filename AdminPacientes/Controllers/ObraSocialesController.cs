@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdminPacientes.Models;
+using AdminPacientes.Data.Interfaces;
 
 namespace AdminPacientes.Controllers
 {
@@ -14,18 +15,18 @@ namespace AdminPacientes.Controllers
     [ApiController]
     public class ObraSocialesController : ControllerBase
     {
-        private readonly AdminContexto _context;
+        private readonly IObraSocialRepository _obraSocial;
 
-        public ObraSocialesController(AdminContexto context)
+        public ObraSocialesController(IObraSocialRepository obraSocial)
         {
-            _context = context;
+            _obraSocial = obraSocial;
         }
 
         // GET: api/ObraSociales
         [HttpGet]
-        public IEnumerable<ObraSocial> GetObraSociales()
+        public async Task<IEnumerable<ObraSocial>> GetObraSociales()
         {
-            return _context.ObraSociales;
+            return await _obraSocial.GetAll();
         }
 
         // GET: api/ObraSociales/5
@@ -37,7 +38,7 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var obraSocial = await _context.ObraSociales.FindAsync(id);
+            var obraSocial = await _obraSocial.GetById(id);
 
             if (obraSocial == null)
             {
@@ -61,15 +62,15 @@ namespace AdminPacientes.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(obraSocial).State = EntityState.Modified;
+            await _obraSocial.Update(obraSocial);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _obraSocial.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ObraSocialExists(id))
+                if (!_obraSocial.exists(id))
                 {
                     return NotFound();
                 }
@@ -91,8 +92,8 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.ObraSociales.Add(obraSocial);
-            await _context.SaveChangesAsync();
+            await _obraSocial.Add(obraSocial);
+            await _obraSocial.SaveChanges();
 
             return CreatedAtAction("GetObraSocial", new { id = obraSocial.Id }, obraSocial);
         }
@@ -106,21 +107,18 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var obraSocial = await _context.ObraSociales.FindAsync(id);
+            var obraSocial = await _obraSocial.GetById(id);
             if (obraSocial == null)
             {
                 return NotFound();
             }
 
-            _context.ObraSociales.Remove(obraSocial);
-            await _context.SaveChangesAsync();
+            await _obraSocial.Remove(obraSocial);
+            await _obraSocial.SaveChanges();
 
             return Ok(obraSocial);
         }
 
-        private bool ObraSocialExists(int id)
-        {
-            return _context.ObraSociales.Any(e => e.Id == id);
-        }
+       
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPacientes.Migrations
 {
     [DbContext(typeof(AdminContexto))]
-    [Migration("20190515003221_primera")]
-    partial class primera
+    [Migration("20190522221549_primera migracion")]
+    partial class primeramigracion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,15 +27,21 @@ namespace AdminPacientes.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Calle");
+                    b.Property<string>("Calle")
+                        .IsRequired()
+                        .HasMaxLength(40);
 
                     b.Property<int>("CodigoPostal");
 
                     b.Property<string>("Dpto");
 
-                    b.Property<string>("Localidad");
+                    b.Property<string>("Localidad")
+                        .IsRequired()
+                        .HasMaxLength(40);
 
-                    b.Property<string>("Nacionalidad");
+                    b.Property<string>("Nacionalidad")
+                        .IsRequired()
+                        .HasMaxLength(40);
 
                     b.Property<int>("Numero");
 
@@ -43,9 +49,9 @@ namespace AdminPacientes.Migrations
 
                     b.Property<int>("Piso");
 
-                    b.Property<string>("Provincia");
-
-                    b.Property<int>("Telefono");
+                    b.Property<string>("Provincia")
+                        .IsRequired()
+                        .HasMaxLength(40);
 
                     b.HasKey("Id");
 
@@ -60,16 +66,18 @@ namespace AdminPacientes.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Direccion");
+                    b.Property<string>("Direccion")
+                        .HasMaxLength(200);
 
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Nombre");
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(40);
 
-                    b.Property<int>("Telefono");
-
-                    b.Property<string>("Tipo");
+                    b.Property<decimal>("Telefono")
+                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 20, scale: 0)));
 
                     b.HasKey("Id");
 
@@ -102,7 +110,7 @@ namespace AdminPacientes.Migrations
                         .IsRequired()
                         .HasMaxLength(30);
 
-                    b.Property<string>("Sexo");
+                    b.Property<int>("Sexo");
 
                     b.HasKey("Id");
 
@@ -151,15 +159,18 @@ namespace AdminPacientes.Migrations
                 {
                     b.HasBaseType("AdminPacientes.Models.Persona");
 
-                    b.Property<string>("EstadoCivil");
+                    b.Property<int>("EstadoCivil");
 
                     b.Property<string>("Ocupacion");
 
                     b.Property<int>("PacienteId");
 
-                    b.Property<string>("Parentezco");
+                    b.Property<string>("Parentezco")
+                        .IsRequired()
+                        .HasMaxLength(40);
 
-                    b.Property<int>("Telefono");
+                    b.Property<decimal>("Telefono")
+                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 20, scale: 0)));
 
                     b.HasIndex("PacienteId");
 

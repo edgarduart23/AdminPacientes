@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AdminPacientes.Migrations
 {
-    public partial class primera : Migration
+    public partial class primeramigracion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,10 +14,9 @@ namespace AdminPacientes.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nombre = table.Column<string>(nullable: true),
-                    Direccion = table.Column<string>(nullable: true),
-                    Tipo = table.Column<string>(nullable: true),
-                    Telefono = table.Column<int>(nullable: false),
+                    Nombre = table.Column<string>(maxLength: 40, nullable: false),
+                    Direccion = table.Column<string>(maxLength: 200, nullable: true),
+                    Telefono = table.Column<decimal>(nullable: false),
                     Email = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -35,7 +34,7 @@ namespace AdminPacientes.Migrations
                     Nombre = table.Column<string>(maxLength: 30, nullable: false),
                     Apellido = table.Column<string>(maxLength: 30, nullable: false),
                     FechaNacimiento = table.Column<DateTime>(nullable: false),
-                    Sexo = table.Column<string>(nullable: true),
+                    Sexo = table.Column<int>(nullable: false),
                     Nacionalidad = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
@@ -43,9 +42,9 @@ namespace AdminPacientes.Migrations
                     FechaBaja = table.Column<DateTime>(nullable: true),
                     NumeroAfiliado = table.Column<int>(nullable: true),
                     ObraSocialId = table.Column<int>(nullable: true),
-                    Telefono = table.Column<int>(nullable: true),
-                    Parentezco = table.Column<string>(nullable: true),
-                    EstadoCivil = table.Column<string>(nullable: true),
+                    Telefono = table.Column<decimal>(nullable: true),
+                    Parentezco = table.Column<string>(maxLength: 40, nullable: true),
+                    EstadoCivil = table.Column<int>(nullable: true),
                     Ocupacion = table.Column<string>(nullable: true),
                     PacienteId = table.Column<int>(nullable: true)
                 },
@@ -72,15 +71,14 @@ namespace AdminPacientes.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Calle = table.Column<string>(nullable: true),
+                    Calle = table.Column<string>(maxLength: 40, nullable: false),
                     Numero = table.Column<int>(nullable: false),
                     Piso = table.Column<int>(nullable: false),
                     Dpto = table.Column<string>(nullable: true),
                     CodigoPostal = table.Column<int>(nullable: false),
-                    Localidad = table.Column<string>(nullable: true),
-                    Provincia = table.Column<string>(nullable: true),
-                    Nacionalidad = table.Column<string>(nullable: true),
-                    Telefono = table.Column<int>(nullable: false),
+                    Localidad = table.Column<string>(maxLength: 40, nullable: false),
+                    Provincia = table.Column<string>(maxLength: 40, nullable: false),
+                    Nacionalidad = table.Column<string>(maxLength: 40, nullable: false),
                     PersonaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

@@ -19,7 +19,7 @@ namespace AdminPacientes.Models
         [Display(Name = "Estado Civil")]
         [Required(ErrorMessage = "El email es requerido")]
         public EnumEstadoCivil EstadoCivil { get; set; }
-        [JsonProperty("EnumSexo")]
+        [JsonProperty("Ocupacion")]
         public string Ocupacion { get; set; }
         //relacion entre Paciente
         [ForeignKey("Paciente")]

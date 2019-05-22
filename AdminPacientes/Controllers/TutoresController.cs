@@ -10,7 +10,7 @@ using AdminPacientes.Models;
 namespace AdminPacientes.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Tutor")]
+    [Route("api/Tutores")]
     [ApiController]
     public class TutoresController : ControllerBase
     {

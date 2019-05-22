@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AdminPacientes.Data.Interfaces;
+using AdminPacientes.Data.Repositories;
 using AdminPacientes.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +31,9 @@ namespace AdminPacientes
         {
             services.AddDbContext<AdminContexto>(opts => opts.UseSqlServer(Configuration["ConnectionString:AdministracionDB"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IObraSocialRepository, ObraSocialRepository>();
+            services.AddScoped<IPacienteRepository, PacienteRepository>();
             services.AddMvc().AddJsonOptions(ConfigurationJson);
             
             //services.AddMvc(options =>

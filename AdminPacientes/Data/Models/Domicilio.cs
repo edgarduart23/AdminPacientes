@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AdminPacientes.Data.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace AdminPacientes.Models
 {
-    public class Domicilio
+    public class Domicilio:Entidad
     {
-        public int Id { get; set; }
+        
         [Required(ErrorMessage = "La direccion es requerida")]
         [StringLength(40)]
         public string Calle { get; set; }

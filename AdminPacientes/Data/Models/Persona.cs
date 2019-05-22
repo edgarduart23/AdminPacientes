@@ -5,12 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using AdminPacientes.Data.Models;
 
 namespace AdminPacientes.Models
 {
-    public abstract class Persona
+    public abstract class Persona:Entidad
     {
-        public int Id { get; set; }
+        
         [Required]
         public int Dni { get; set; }
 
@@ -23,7 +24,7 @@ namespace AdminPacientes.Models
         [DataType(DataType.Text)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime FechaNacimiento { get; set; }
-        [JsonProperty("EnumSexo")]
+        [JsonProperty("Sexo")]
         public EnumSexo Sexo { get; set; }
         public string Nacionalidad { get; set; }
         

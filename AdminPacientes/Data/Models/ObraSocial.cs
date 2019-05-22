@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdminPacientes.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AdminPacientes.Models
 {
-    public class ObraSocial
+    public class ObraSocial:Entidad
     {
-        public int Id { get; set; }
+        
         [Required(ErrorMessage = "El nombre es requerido")]
         [StringLength(40)]
         public string Nombre { get; set; }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AdminPacientes.Data.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace AdminPacientes.Models
 {
-    public class Registro
+    public class Registro:Entidad
     {
-        public int Id { get; set; }
+        
         [Required(ErrorMessage ="La fecha de atencion es requerida")]
         public DateTime FechaAtencion { get; set; }
         //relacion entre Paciente

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdminPacientes.Models;
+using AdminPacientes.Data.Interfaces;
 
 namespace AdminPacientes.Controllers
 {
@@ -14,18 +15,18 @@ namespace AdminPacientes.Controllers
     [ApiController]
     public class PacientesController : ControllerBase
     {
-        private readonly AdminContexto _context;
+        private readonly IPacienteRepository _context;
 
-        public PacientesController(AdminContexto context)
+        public PacientesController(IPacienteRepository context)
         {
             _context = context;
         }
 
         // GET: api/Pacientes
         [HttpGet]
-        public IEnumerable<Paciente> GetPacientes()
+        public async Task<IEnumerable<Paciente>> GetPacientes()
         {
-            return _context.Pacientes;
+            return await _context.GetAll();
         }
 
         // GET: api/Pacientes/5
@@ -37,7 +38,7 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var paciente = await _context.Pacientes.FindAsync(id);
+            var paciente = await _context.GetById(id);
 
             if (paciente == null)
             {
@@ -61,15 +62,15 @@ namespace AdminPacientes.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(paciente).State = EntityState.Modified;
+            await _context.Update(paciente);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PacienteExists(id))
+                if (!_context.exists(id))
                 {
                     return NotFound();
                 }
@@ -91,8 +92,8 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Pacientes.Add(paciente);
-            await _context.SaveChangesAsync();
+            await _context.Add(paciente);
+            await _context.SaveChanges();
 
             return CreatedAtAction("GetPaciente", new { id = paciente.Id }, paciente);
         }
@@ -106,21 +107,18 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var paciente = await _context.Pacientes.FindAsync(id);
+            var paciente = await _context.GetById(id);
             if (paciente == null)
             {
                 return NotFound();
             }
 
-            _context.Pacientes.Remove(paciente);
-            await _context.SaveChangesAsync();
+            await _context.Remove(paciente);
+            await _context.SaveChanges();
 
             return Ok(paciente);
         }
 
-        private bool PacienteExists(int id)
-        {
-            return _context.Pacientes.Any(e => e.Id == id);
-        }
+        
     }
 }
