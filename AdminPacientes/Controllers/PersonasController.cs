@@ -35,7 +35,7 @@ namespace AdminPacientes.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            
             var persona = await _context.Personas.FindAsync(id);
 
             if (persona == null)

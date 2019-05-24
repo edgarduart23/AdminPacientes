@@ -70,7 +70,7 @@ namespace AdminPacientes.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.exists(id))
+                if (!_context.Exists(id))
                 {
                     return NotFound();
                 }

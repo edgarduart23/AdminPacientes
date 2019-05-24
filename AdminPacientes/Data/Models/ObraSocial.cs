@@ -9,7 +9,11 @@ namespace AdminPacientes.Models
 {
     public class ObraSocial:Entidad
     {
-        
+        public ObraSocial()
+        {
+            Pacientes = new List<Paciente>();
+        }
+
         [Required(ErrorMessage = "El nombre es requerido")]
         [StringLength(40)]
         public string Nombre { get; set; }

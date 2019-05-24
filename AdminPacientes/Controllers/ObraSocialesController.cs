@@ -47,6 +47,41 @@ namespace AdminPacientes.Controllers
 
             return Ok(obraSocial);
         }
+        // GET: api/ObraSociales/5
+        [HttpGet("GetAllporPaciente/{id}")]
+        public IActionResult GetAllporPaciente([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var obraSocial =  _obraSocial.GetAllpor(id).FirstOrDefault(x=>x.Id==id);
+
+            if (obraSocial == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(obraSocial);
+        }
+
+        [HttpGet("byname/{name}")]
+        public async Task<IActionResult> GetByName([FromRoute] string name)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+           var obrasocialNombre = await _obraSocial.GetByName(name);
+            if (obrasocialNombre == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(obrasocialNombre);
+        }
 
         // PUT: api/ObraSociales/5
         [HttpPut("{id}")]
@@ -70,7 +105,7 @@ namespace AdminPacientes.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_obraSocial.exists(id))
+                if (!_obraSocial.Exists(id))
                 {
                     return NotFound();
                 }

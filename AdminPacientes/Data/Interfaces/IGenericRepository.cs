@@ -21,6 +21,6 @@ namespace AdminPacientes.Data.Interfaces
         Task<int> CountAll();
         Task<int> CountWhere(Expression<Func<T, bool>> predicate);
         Task<int> SaveChanges();
-        bool exists(int id);
+        bool Exists(int id);
     }
 }

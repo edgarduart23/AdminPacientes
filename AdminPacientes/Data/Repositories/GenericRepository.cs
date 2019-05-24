@@ -69,11 +69,11 @@ namespace AdminPacientes.Data.Repositories
             return await Context.SaveChangesAsync();
         }
 
-        public bool exists(int id)
+        public bool Exists(int id)
         {
             return Context.Set<T>().Any(e => e.Id == id);
         }
-
+        
 
         #endregion
 

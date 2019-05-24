@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdminPacientes.Models;
+using AdminPacientes.Data.Interfaces;
 
 namespace AdminPacientes.Controllers
 {
@@ -14,18 +15,18 @@ namespace AdminPacientes.Controllers
     [ApiController]
     public class RegistrosController : ControllerBase
     {
-        private readonly AdminContexto _context;
+        private readonly IRegistroRepository _context;
 
-        public RegistrosController(AdminContexto context)
+        public RegistrosController(IRegistroRepository context)
         {
             _context = context;
         }
 
         // GET: api/Registros
         [HttpGet]
-        public IEnumerable<Registro> GetRegistros()
+        public async Task<IEnumerable<Registro>> GetRegistros()
         {
-            return _context.Registros;
+            return await _context.GetAll();
         }
 
         // GET: api/Registros/5
@@ -37,7 +38,7 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var registro = await _context.Registros.FindAsync(id);
+            var registro = await _context.GetById(id);
 
             if (registro == null)
             {
@@ -61,15 +62,15 @@ namespace AdminPacientes.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(registro).State = EntityState.Modified;
+            await _context.Update(registro);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RegistroExists(id))
+                if (!_context.Exists(id))
                 {
                     return NotFound();
                 }
@@ -91,8 +92,8 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Registros.Add(registro);
-            await _context.SaveChangesAsync();
+            await _context.Add(registro);
+            await _context.SaveChanges();
 
             return CreatedAtAction("GetRegistro", new { id = registro.Id }, registro);
         }
@@ -106,21 +107,18 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var registro = await _context.Registros.FindAsync(id);
+            var registro = await _context.GetById(id);
             if (registro == null)
             {
                 return NotFound();
             }
 
-            _context.Registros.Remove(registro);
-            await _context.SaveChangesAsync();
+            await _context.Remove(registro);
+            await _context.SaveChanges();
 
             return Ok(registro);
         }
 
-        private bool RegistroExists(int id)
-        {
-            return _context.Registros.Any(e => e.Id == id);
-        }
+        
     }
 }

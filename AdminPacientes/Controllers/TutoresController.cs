@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdminPacientes.Models;
+using AdminPacientes.Data.Interfaces;
 
 namespace AdminPacientes.Controllers
 {
@@ -14,18 +15,18 @@ namespace AdminPacientes.Controllers
     [ApiController]
     public class TutoresController : ControllerBase
     {
-        private readonly AdminContexto _context;
+        private readonly ITutorRepository _context;
 
-        public TutoresController(AdminContexto context)
+        public TutoresController(ITutorRepository context)
         {
             _context = context;
         }
 
         // GET: api/Tutores
         [HttpGet]
-        public IEnumerable<Tutor> GetTutores()
+        public async Task<IEnumerable<Tutor>> GetTutores()
         {
-            return _context.Tutores;
+            return await _context.GetAll();
         }
 
         // GET: api/Tutores/5
@@ -37,7 +38,7 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var tutor = await _context.Tutores.FindAsync(id);
+            var tutor = await _context.GetById(id);
 
             if (tutor == null)
             {
@@ -61,15 +62,15 @@ namespace AdminPacientes.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(tutor).State = EntityState.Modified;
+            await _context.Update(tutor);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TutorExists(id))
+                if (!_context.Exists(id))
                 {
                     return NotFound();
                 }
@@ -91,8 +92,8 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Tutores.Add(tutor);
-            await _context.SaveChangesAsync();
+            await _context.Add(tutor);
+            await _context.SaveChanges();
 
             return CreatedAtAction("GetTutor", new { id = tutor.Id }, tutor);
         }
@@ -106,21 +107,18 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var tutor = await _context.Tutores.FindAsync(id);
+            var tutor = await _context.GetById(id);
             if (tutor == null)
             {
                 return NotFound();
             }
 
-            _context.Tutores.Remove(tutor);
-            await _context.SaveChangesAsync();
+            await _context.Remove(tutor);
+            await _context.SaveChanges();
 
             return Ok(tutor);
         }
 
-        private bool TutorExists(int id)
-        {
-            return _context.Tutores.Any(e => e.Id == id);
-        }
+        
     }
 }

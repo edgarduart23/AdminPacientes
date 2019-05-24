@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdminPacientes.Data.Interfaces
 {
-    public interface IObraSocialRepository: IGenericRepository<ObraSocial>
+    public interface IRegistroRepository : IGenericRepository<Registro>
     {
-        Task<ObraSocial> GetByName(string nombre);
-        IEnumerable<ObraSocial> GetAllpor(int id);
     }
 }
