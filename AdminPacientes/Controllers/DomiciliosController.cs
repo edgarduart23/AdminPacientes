@@ -6,27 +6,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdminPacientes.Models;
-using AdminPacientes.Data.Interfaces;
 
 namespace AdminPacientes.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Domicilios")]
+    [Route("api/[controller]")]
     [ApiController]
     public class DomiciliosController : ControllerBase
     {
-        private readonly IDomicilioRepository _context;
+        private readonly AdminContexto _context;
 
-        public DomiciliosController(IDomicilioRepository context)
+        public DomiciliosController(AdminContexto context)
         {
             _context = context;
         }
 
         // GET: api/Domicilios
         [HttpGet]
-        public async Task<IEnumerable<Domicilio>> GetDomicilios()
+        public IEnumerable<Domicilio> GetDomicilios()
         {
-            return await _context.GetAll();
+            return _context.Domicilios;
         }
 
         // GET: api/Domicilios/5
@@ -38,7 +36,7 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var domicilio = await _context.GetById(id);
+            var domicilio = await _context.Domicilios.FindAsync(id);
 
             if (domicilio == null)
             {
@@ -62,15 +60,15 @@ namespace AdminPacientes.Controllers
                 return BadRequest();
             }
 
-            await _context.Update(domicilio);
+            _context.Entry(domicilio).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Exists(id))
+                if (!DomicilioExists(id))
                 {
                     return NotFound();
                 }
@@ -92,8 +90,8 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.Add(domicilio);
-            await _context.SaveChanges();
+            _context.Domicilios.Add(domicilio);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDomicilio", new { id = domicilio.Id }, domicilio);
         }
@@ -107,18 +105,21 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var domicilio = await _context.GetById(id);
+            var domicilio = await _context.Domicilios.FindAsync(id);
             if (domicilio == null)
             {
                 return NotFound();
             }
 
-            await _context.Remove(domicilio);
-            await _context.SaveChanges();
+            _context.Domicilios.Remove(domicilio);
+            await _context.SaveChangesAsync();
 
             return Ok(domicilio);
         }
 
-        
+        private bool DomicilioExists(int id)
+        {
+            return _context.Domicilios.Any(e => e.Id == id);
+        }
     }
 }

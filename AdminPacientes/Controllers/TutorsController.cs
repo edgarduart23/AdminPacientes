@@ -6,30 +6,28 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdminPacientes.Models;
-using AdminPacientes.Data.Interfaces;
 
 namespace AdminPacientes.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Tutores")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class TutoresController : ControllerBase
+    public class TutorsController : ControllerBase
     {
-        private readonly ITutorRepository _context;
+        private readonly AdminContexto _context;
 
-        public TutoresController(ITutorRepository context)
+        public TutorsController(AdminContexto context)
         {
             _context = context;
         }
 
-        // GET: api/Tutores
+        // GET: api/Tutors
         [HttpGet]
-        public async Task<IEnumerable<Tutor>> GetTutores()
+        public IEnumerable<Tutor> GetTutores()
         {
-            return await _context.GetAll();
+            return _context.Tutores;
         }
 
-        // GET: api/Tutores/5
+        // GET: api/Tutors/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTutor([FromRoute] int id)
         {
@@ -38,7 +36,7 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var tutor = await _context.GetById(id);
+            var tutor = await _context.Tutores.FindAsync(id);
 
             if (tutor == null)
             {
@@ -48,7 +46,7 @@ namespace AdminPacientes.Controllers
             return Ok(tutor);
         }
 
-        // PUT: api/Tutores/5
+        // PUT: api/Tutors/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTutor([FromRoute] int id, [FromBody] Tutor tutor)
         {
@@ -62,15 +60,15 @@ namespace AdminPacientes.Controllers
                 return BadRequest();
             }
 
-            await _context.Update(tutor);
+            _context.Entry(tutor).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Exists(id))
+                if (!TutorExists(id))
                 {
                     return NotFound();
                 }
@@ -83,7 +81,7 @@ namespace AdminPacientes.Controllers
             return NoContent();
         }
 
-        // POST: api/Tutores
+        // POST: api/Tutors
         [HttpPost]
         public async Task<IActionResult> PostTutor([FromBody] Tutor tutor)
         {
@@ -92,13 +90,13 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.Add(tutor);
-            await _context.SaveChanges();
+            _context.Tutores.Add(tutor);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTutor", new { id = tutor.Id }, tutor);
         }
 
-        // DELETE: api/Tutores/5
+        // DELETE: api/Tutors/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTutor([FromRoute] int id)
         {
@@ -107,18 +105,21 @@ namespace AdminPacientes.Controllers
                 return BadRequest(ModelState);
             }
 
-            var tutor = await _context.GetById(id);
+            var tutor = await _context.Tutores.FindAsync(id);
             if (tutor == null)
             {
                 return NotFound();
             }
 
-            await _context.Remove(tutor);
-            await _context.SaveChanges();
+            _context.Tutores.Remove(tutor);
+            await _context.SaveChangesAsync();
 
             return Ok(tutor);
         }
 
-        
+        private bool TutorExists(int id)
+        {
+            return _context.Tutores.Any(e => e.Id == id);
+        }
     }
 }
