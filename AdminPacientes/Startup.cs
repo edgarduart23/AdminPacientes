@@ -34,6 +34,9 @@ namespace AdminPacientes
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IObraSocialRepository, ObraSocialRepository>();
             services.AddScoped<IPacienteRepository, PacienteRepository>();
+            services.AddScoped<IDomicilioRepository, DomicilioRepository>();
+            services.AddScoped<ITutorRepository, TutorRepository>();
+            
             services.AddMvc().AddJsonOptions(ConfigurationJson);
             
             //services.AddMvc(options =>

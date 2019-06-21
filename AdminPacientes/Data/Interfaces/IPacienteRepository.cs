@@ -8,6 +8,6 @@ namespace AdminPacientes.Data.Interfaces
 {
     public interface IPacienteRepository : IGenericRepository<Paciente>
     {
-       
+        
     }
 }
