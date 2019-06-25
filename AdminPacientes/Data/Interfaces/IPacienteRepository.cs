@@ -8,6 +8,8 @@ namespace AdminPacientes.Data.Interfaces
 {
     public interface IPacienteRepository : IGenericRepository<Paciente>
     {
+        Task<Paciente> GetByNamePaciente(int dni);
+        IEnumerable<Paciente> GetAllporDomicilio(int id);
         
     }
 }

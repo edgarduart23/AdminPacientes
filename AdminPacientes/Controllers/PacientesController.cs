@@ -47,7 +47,41 @@ namespace AdminPacientes.Controllers
 
             return Ok(paciente);
         }
+        [HttpGet("byDni/{dni}")]
+        public async Task<IActionResult> GetByNamePaciente([FromRoute] int dni )
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var pacienteDni = await _context.GetByNamePaciente(dni);
+            if (pacienteDni == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(pacienteDni);
+        }
+
+        // GET: api/ObraSociales/5
+        [HttpGet("GetAllporDomi/{id}")]
+        public IActionResult GetAllporDomicilio([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var paciente = _context.GetAllporDomicilio(id).FirstOrDefault(x => x.Id == id);
+
+            if (paciente == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(paciente);
+        }
         // PUT: api/Pacientes/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPaciente([FromRoute] int id, [FromBody] Paciente paciente)
